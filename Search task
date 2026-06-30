@@ -1,0 +1,7 @@
+DECLARE @BackupFile VARCHAR(255);
+-- Generates a dynamic filename with a timestamp to prevent overwriting previous backups
+SET @BackupFile = 'D:\Backups\MyDb_Log_' + REPLACE(REPLACE(CONVERT(VARCHAR, GETDATE(), 120), '-', '_'), ':', '_') + '.trn';
+
+BACKUP LOG [YourDatabaseName] 
+TO DISK = @BackupFile
+WITH NOFORMAT, NOINIT, NAME = 'Transaction Log Backup', SKIP, NOREWIND, NOUNLOAD, STATS = 10;
